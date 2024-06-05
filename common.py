@@ -18,6 +18,8 @@ A) {A}
 B) {B}
 C) {C}
 D) {D}
+
+Remember, last line of your response should be of the following format: 'Answer: $LETTER' (without quotes) where LETTER is one of ABCD. Think step by step before answering.
 """.strip()
 
 ANSWER_PATTERN_MULTICHOICE = r"(?i)Answer\s*:\s*([A-D])"

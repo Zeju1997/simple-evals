@@ -130,3 +130,6 @@ dmypy.json
 
 # submodules
 human-eval/
+models/
+results/
+__pycache__/

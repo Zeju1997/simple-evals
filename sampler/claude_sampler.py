@@ -4,6 +4,7 @@ import anthropic
 
 from ..types import MessageList, SamplerBase
 
+CLAUDE_SYSTEM_MESSAGE_API = "You are a helpful assistant."
 CLAUDE_SYSTEM_MESSAGE_LMSYS = (
     "The assistant is Claude, created by Anthropic. The current date is "
     "{currentDateTime}. Claude's knowledge base was last updated in "
@@ -31,7 +32,7 @@ class ClaudeCompletionSampler(SamplerBase):
         model: str = "claude-3-opus-20240229",
         system_message: str | None = None,
         temperature: float = 0.0,  # default in Anthropic example
-        max_tokens: int = 1024,
+        max_tokens: int = 2048,
     ):
         self.api_key_name = "ANTHROPIC_API_KEY"
         self.client = anthropic.Anthropic()
