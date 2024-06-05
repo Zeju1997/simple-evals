@@ -18,8 +18,8 @@ python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps
 
 
 
-# gemma-1.1-7b-it-test-10k
-python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/gemma-1.1-7b-it_10000/ --dtype auto --api-key token-abc123 --tensor-parallel-size 8
+# gemma-1.1-7b-it-test-25k
+python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/gemma-1.1-7b-it_25000_mini --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
 # gemma-1.1-7b-it-test-50k
 python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/gemma-1.1-7b-it_50000/ --dtype auto --api-key token-abc123 --tensor-parallel-size 8
@@ -28,8 +28,8 @@ python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps
 python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/gemma-1.1-7b-it/ --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
 
-# mistral-7b-v0.3-test-10k
-python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/mistral-7b-instruct-v0.3_10000/ --dtype auto --api-key token-abc123 --tensor-parallel-size 8
+# mistral-7b-v0.3-test-25k
+python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/mistral-7b-instruct-v0.3_25000_mini --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
 # mistral-7b-v0.3-test-50k
 python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/mistral-7b-instruct-v0.3_50000/ --dtype auto --api-key token-abc123 --tensor-parallel-size 8
@@ -61,7 +61,7 @@ python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/zqiu/unsl
 # llama3-8B
 python -m vllm.entrypoints.openai.api_server --model models/Meta-Llama-3-8B-Instruct --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
-# mistral-70B
+# llama3-70B
 python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/zqiu/huggingface_models/Meta-Llama-3-70B-Instruct/ --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
 
@@ -101,12 +101,6 @@ python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps
 
 
 
-# codellama-7B
-# python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/simple-evals/models/CodeLlama-7b-Instruct-hf --dtype auto --api-key token-abc123 --tensor-parallel-size 8
-
-# codellama-70B
-# python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/simple-evals/models/CodeLlama-70b-Instruct-hf --dtype auto --api-key token-abc123 --tensor-parallel-size 8
-
 
 
 
@@ -134,11 +128,42 @@ python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps
 
 
 
-# Yi-1.5-6B
-# python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/simple-evals/models/Yi-1.5-6B-Chat --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
 # Yi-1.5-9B
 python -m vllm.entrypoints.openai.api_server --model 01-ai/Yi-1.5-9B-Chat-16K --dtype auto --api-key token-abc123 --tensor-parallel-size 8
 
 # Yi-1.5-34B
 python -m vllm.entrypoints.openai.api_server --model 01-ai/Yi-1.5-34B-Chat-16K --dtype auto --api-key token-abc123 --tensor-parallel-size 8
+
+
+
+# python -m simple-evals.demo --api openai
+# 0: python -m simple-evals.demo --base_url http://172.22.8.1:8000/v1 --api llama3-8B
+# 2: python -m simple-evals.demo --base_url http://172.22.8.6:8000/v1 --api llama3-70B
+# 3: python -m simple-evals.demo --base_url http://172.22.8.14:8000/v1 --api gemma-1.1-2b
+# 4: python -m simple-evals.demo --base_url http://172.22.8.7:8000/v1 --api gemma-1.1-7b
+# 5: python -m simple-evals.demo --base_url http://172.22.8.16:8000/v1 --api c4ai-command-r-v01
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Yi-1.5-6B
+# python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/simple-evals/models/Yi-1.5-6B-Chat --dtype auto --api-key token-abc123 --tensor-parallel-size 8
+
+
+# codellama-7B
+# python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/simple-evals/models/CodeLlama-7b-Instruct-hf --dtype auto --api-key token-abc123 --tensor-parallel-size 8
+
+# codellama-70B
+# python -m vllm.entrypoints.openai.api_server --model /lustre/fast/fast/groups/ps-invsolid/InvSolid/simple-evals/models/CodeLlama-70b-Instruct-hf --dtype auto --api-key token-abc123 --tensor-parallel-size 8

@@ -20,7 +20,7 @@ Solve the following problem step by step. The last line of your response should 
 
 {Question}
 
-Remember to put your answer on its own line after "Answer:", and you do not need to use a \\boxed command.
+Important, put your answer on its own line after "Answer:", and you do not need to use a \\boxed command.
 """.strip()
 
 
@@ -39,12 +39,20 @@ class MNISTEval(Eval):
 
     def __call__(self, sampler: SamplerBase) -> EvalResult:
         def fn(row: dict):
+            max_retries = 5
+            retry_count = 0
+            extracted_answer = None
+            response_text = ""
             prompt_messages = [
                 sampler._pack_message(content=QUERY_TEMPLATE.format(**row), role="user")
             ]
-            response_text = sampler(prompt_messages)
-            match = re.search(ANSWER_PATTERN, response_text)
-            extracted_answer = match.group(1) if match else None
+            
+            while retry_count < max_retries and extracted_answer is None:
+                response_text = sampler(prompt_messages)
+                match = re.search(ANSWER_PATTERN, response_text)
+                extracted_answer = match.group(1) if match else None
+                retry_count += 1
+
             score = float(check_equality(self.equality_checker, row["Answer"], extracted_answer))
             html = common.jinja_env.from_string(HTML_JINJA).render(
                 prompt_messages=prompt_messages,

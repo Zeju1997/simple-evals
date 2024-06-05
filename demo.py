@@ -11,7 +11,7 @@ from .mgsm_eval import MGSMEval
 from .mmlu_eval import MMLUEval
 from .local_eval import LOCALEval
 from .mnist_eval import MNISTEval
-from .cad_eval import CADEval
+# from .cad_eval import CADEval
 from .symmetry_eval import SymmetryEval
 from .sampler.gpt_sampler import (
     OPENAI_SYSTEM_MESSAGE_API,
@@ -275,7 +275,7 @@ def main(args):
     elif args.api == "gemma-1.1-7b-it-test-25k":
         samplers = {
             "gemma-1.1-7b-it-test-25k": OpenChatCompletionSampler(
-                model="/lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/gemma-1.1-7b-it_10000/",
+                model="/lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/gemma-1.1-7b-it_25000_mini ",
                 system_message=None,
                 base_url=args.base_url
             ),
@@ -299,7 +299,7 @@ def main(args):
     elif args.api == "mistral-7b-v0.3-test-25k":
         samplers = {
             "mistral-7b-v0.3-test-25k": OpenChatCompletionSampler(
-                model="/lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/mistral-7b-instruct-v0.3_10000/",
+                model="/lustre/fast/fast/groups/ps-invsolid/InvSolid/unsloth/mistral-7b-instruct-v0.3_25000_mini",
                 system_message=None,
                 base_url=args.base_url
             ),
@@ -349,10 +349,9 @@ def main(args):
                 return LOCALEval(num_examples=10 if debug else None, mode="shape")
             case "gb_raw":
                 return LOCALEval(num_examples=10 if debug else None, mode="raw")
-            case "gb_symmetry":
-                return SymmetryEval(
-                    equality_checker=equality_checker, num_examples=10 if debug else None, mode="symmetry"
-                )
+            case "cad":
+                return LOCALEval(num_examples=10 if debug else None, mode="cad")
+            
             case "mnist":
                 return MNISTEval(
                     equality_checker=equality_checker, num_examples=10 if debug else None, mode="mnist"
@@ -380,9 +379,11 @@ def main(args):
             case "gb_inv_r4":
                 return LOCALEval(num_examples=10 if debug else None, mode="inv_r4")
 
-            case "cad":
-                return CADEval(num_examples=10 if debug else None)
 
+            case "gb_symmetry":
+                return SymmetryEval(
+                    equality_checker=equality_checker, num_examples=10 if debug else None, mode="symmetry"
+                )
             case "math":
                 return MathEval(
                     equality_checker=equality_checker, num_examples=5 if debug else 2500
@@ -397,7 +398,7 @@ def main(args):
                 raise Exception(f"Unrecoginized eval type: {eval_name}")
 
     evals = {
-        eval_name: get_evals(eval_name, args.api) for eval_name in ["gb_main"] #, "gb_semantics", "gb_count", "gb_color", "gb_shape", "gb_reasoning", "cad", "mnist", "gb_inv", "gb_inv_t0", "gb_inv_t1", "gb_inv_t2", "gb_inv_t3", "gb_inv_t4", "gb_inv_r0", "gb_inv_r1", "gb_inv_r2", "gb_inv_r3", "gb_inv_r4"]
+        eval_name: get_evals(eval_name, args.api) for eval_name in ["cad"] #, "gb_main", "gb_semantics", "gb_count", "gb_color", "gb_shape", "gb_reasoning", "cad", "mnist", "gb_inv", "gb_inv_t0", "gb_inv_t1", "gb_inv_t2", "gb_inv_t3", "gb_inv_t4", "gb_inv_r0", "gb_inv_r1", "gb_inv_r2", "gb_inv_r3", "gb_inv_r4"]
         # eval_name: get_evals(eval_name, args.api) for eval_name in ["gb_inv", "gb_inv_t0", "gb_inv_t1", "gb_inv_t2", "gb_inv_t3", "gb_inv_t4", "gb_inv_r0", "gb_inv_r1", "gb_inv_r2", "gb_inv_r3", "gb_inv_r4"]
         # eval_name: get_evals(eval_name) for eval_name in ["gb_main", "gb_symmetry", "gb_raw", "cad", "mnist", "math", "gpqa", "mgsm", "drop"]
     }

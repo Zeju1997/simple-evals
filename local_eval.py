@@ -59,6 +59,7 @@ subject2category = {
     "tool": "other",
     "clothing": "other",
     "time_clock": "other",
+    "QA": "other",
 }
 
 class LOCALEval(Eval):
